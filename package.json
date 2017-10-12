@@ -1,0 +1,26 @@
+{
+  "name": "react-mobx-storage",
+  "version": "0.1.0",
+  "description": "Easy cross-platform storage API for React and React Native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rawrmaan/react-mobx-storage.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rawrmaan/react-mobx-storage/issues"
+  },
+  "homepage": "https://github.com/rawrmaan/react-mobx-storage#readme",
+  "dependencies": {
+    "mobx": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/react-native": "^0.49.2",
+    "localforage": "^1.5.2"
+  }
+}
