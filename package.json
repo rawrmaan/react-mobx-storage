@@ -6,7 +6,7 @@
   "scripts": {
     "test":
       "NODE_ENV=test ./node_modules/.bin/mocha --require ts-node/register tests/**/*.ts",
-    "prepublish": "tsc"
+    "prepublishOnly": "tsc"
   },
   "repository": {
     "type": "git",
