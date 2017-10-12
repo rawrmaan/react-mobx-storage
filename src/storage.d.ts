@@ -1,4 +1,4 @@
-export interface IPersistLayer {
+export interface IStorage {
   loadInto(domain: string, key: string, object: any): Promise<any>
   loadAllInto(domain: string, keys: Array<string>, object: any): Promise<any>
   get(domain: string, key: string): Promise<any>
@@ -6,10 +6,10 @@ export interface IPersistLayer {
   delete(domain: string, key: string): Promise<any>
   deleteAll(domain: string, keys: Array<string>): Promise<any>
   keys(): Promise<Array<string>>
-  bindToDomain<T>(domain: string, context: T): IPersistLayerBound<T>
+  bindToDomain<T>(domain: string, context: T): IStorageBound<T>
 }
 
-export interface IPersistLayerBound<T> {
+export interface IStorageBound<T> {
   loadAll(keys: Array<keyof T>): Promise<any>
   get<K extends keyof T>(key: K): Promise<T[K]>
   save<K extends keyof T>(key: keyof T, value: T[K]): Promise<any>
@@ -18,7 +18,7 @@ export interface IPersistLayerBound<T> {
 }
 
 // Storage Layer Implementation
-export interface IPersistLayerImplementation {
+export interface IStorageEngine {
   get(key: string): Promise<any>
   save(key: string, value: any): Promise<any>
   delete(key: string): Promise<any>

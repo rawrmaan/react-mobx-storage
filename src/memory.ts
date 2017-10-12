@@ -1,8 +1,8 @@
-import { IPersistLayerImplementation } from './persist'
+import { IStorageEngine } from './storage'
 
 const storage = {}
 
-const Implementation: IPersistLayerImplementation = {
+const Implementation: IStorageEngine = {
   get(key) {
     return Promise.resolve(storage[key])
   },

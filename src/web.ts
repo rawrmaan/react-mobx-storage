@@ -1,8 +1,8 @@
-import { IPersistLayerImplementation } from './persist'
+import { IStorageEngine } from './storage'
 
 import * as localForage from 'localforage'
 
-const Implementation: IPersistLayerImplementation = {
+const Implementation: IStorageEngine = {
   get(key) {
     return localForage.getItem(key)
   },

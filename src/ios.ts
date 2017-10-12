@@ -1,8 +1,8 @@
-import { IPersistLayerImplementation } from './persist'
+import { IStorageEngine } from './storage'
 
 import { AsyncStorage } from 'react-native'
 
-const Implementation: IPersistLayerImplementation = {
+const Implementation: IStorageEngine = {
   get(key) {
     return AsyncStorage.getItem(key).then(val => JSON.parse(val))
   },

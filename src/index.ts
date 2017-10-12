@@ -1,49 +1,45 @@
 import { ObservableMap } from 'mobx'
-import {
-  IPersistLayer,
-  IPersistLayerBound,
-  IPersistLayerImplementation
-} from './persist'
+import { IStorage, IStorageBound, IStorageEngine } from './storage'
 
-export class PersistLayerBound<T> implements IPersistLayerBound<T> {
-  _persistLayer: IPersistLayer
+export class StorageBound<T> implements IStorageBound<T> {
+  _storage: IStorage
   _domain: string
   _context: T
 
-  constructor(persistLayer: IPersistLayer, domain: string, context: T) {
-    this._persistLayer = persistLayer
+  constructor(storage: IStorage, domain: string, context: T) {
+    this._storage = storage
     this._context = context
     this._domain = domain
   }
 
   loadAll(keys: Array<keyof T>): Promise<any> {
-    return this._persistLayer.loadAllInto(this._domain, keys, this._context)
+    return this._storage.loadAllInto(this._domain, keys, this._context)
   }
 
   get<K extends keyof T>(key: K): Promise<T[K]> {
-    return this._persistLayer.get(this._domain, key)
+    return this._storage.get(this._domain, key)
   }
 
   save<K extends keyof T>(key: keyof T, value: T[K]): Promise<any> {
-    return this._persistLayer.save(this._domain, key, value)
+    return this._storage.save(this._domain, key, value)
   }
 
   delete(key: keyof T): Promise<any> {
-    return this._persistLayer.delete(this._domain, key)
+    return this._storage.delete(this._domain, key)
   }
 
   deleteAll(keys: Array<keyof T>): Promise<any> {
-    return this._persistLayer.deleteAll(this._domain, keys)
+    return this._storage.deleteAll(this._domain, keys)
   }
 }
 
-export default class PersistLayer implements IPersistLayer {
+export default class Storage implements IStorage {
   _namespace: string
-  _implementation: IPersistLayerImplementation
+  _engine: IStorageEngine
 
-  constructor(namespace: string, implementation: IPersistLayerImplementation) {
+  constructor(namespace: string, engine: IStorageEngine) {
     this._namespace = namespace
-    this._implementation = implementation
+    this._engine = engine
   }
 
   loadInto(domain: string, key: string, object: any) {
@@ -64,18 +60,15 @@ export default class PersistLayer implements IPersistLayer {
   }
 
   get(domain: string, key: string) {
-    return this._implementation.get(`${this._namespace}.${domain}.${key}`)
+    return this._engine.get(`${this._namespace}.${domain}.${key}`)
   }
 
   save(domain: string, key: string, value: any) {
-    return this._implementation.save(
-      `${this._namespace}.${domain}.${key}`,
-      value
-    )
+    return this._engine.save(`${this._namespace}.${domain}.${key}`, value)
   }
 
   delete(domain: string, key: string) {
-    return this._implementation.delete(`${this._namespace}.${domain}.${key}`)
+    return this._engine.delete(`${this._namespace}.${domain}.${key}`)
   }
 
   deleteAll(domain: string, keys: Array<string>) {
@@ -83,10 +76,10 @@ export default class PersistLayer implements IPersistLayer {
   }
 
   keys() {
-    return this._implementation.keys()
+    return this._engine.keys()
   }
 
-  bindToDomain<T>(domain: string, context: T): PersistLayerBound<T> {
-    return new PersistLayerBound(this, domain, context)
+  bindToDomain<T>(domain: string, context: T): StorageBound<T> {
+    return new StorageBound(this, domain, context)
   }
 }
