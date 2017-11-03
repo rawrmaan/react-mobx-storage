@@ -1,6 +1,6 @@
 {
   "name": "react-mobx-storage",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Easy cross-platform storage API for React and React Native",
   "main": "dist/index.js",
   "scripts": {
