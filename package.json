@@ -2,7 +2,7 @@
   "name": "react-mobx-storage",
   "version": "0.1.0",
   "description": "Easy cross-platform storage API for React and React Native",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test":
       "NODE_ENV=test ./node_modules/.bin/mocha --require ts-node/register tests/**/*.ts",
