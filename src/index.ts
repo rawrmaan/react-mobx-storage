@@ -13,23 +13,27 @@ export class StorageBound<T> implements IStorageBound<T> {
   }
 
   loadAll(keys: Array<keyof T>): Promise<any> {
-    return this._storage.loadAllInto(this._domain, keys, this._context)
+    return this._storage.loadAllInto(
+      this._domain,
+      keys as string[],
+      this._context
+    )
   }
 
   get<K extends keyof T>(key: K): Promise<T[K]> {
-    return this._storage.get(this._domain, key)
+    return this._storage.get(this._domain, key as string)
   }
 
   save<K extends keyof T>(key: keyof T, value: T[K]): Promise<any> {
-    return this._storage.save(this._domain, key, value)
+    return this._storage.save(this._domain, key as string, value)
   }
 
   delete(key: keyof T): Promise<any> {
-    return this._storage.delete(this._domain, key)
+    return this._storage.delete(this._domain, key as string)
   }
 
   deleteAll(keys: Array<keyof T>): Promise<any> {
-    return this._storage.deleteAll(this._domain, keys)
+    return this._storage.deleteAll(this._domain, keys as string[])
   }
 }
 
